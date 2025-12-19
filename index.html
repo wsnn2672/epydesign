@@ -3,25 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Brain Health Monitor (Dark)</title>
+    <title>Brain Health Monitor (Pro)</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Inter', sans-serif; background-color: #020617; }
         
-        /* Akıcı Grafik Animasyonu */
-        @keyframes scrollGraph {
-            from { background-position: 0 0; }
-            to { background-position: -50px 0; }
-        }
-        
-        .eeg-graph {
-            background-image: url("data:image/svg+xml,%3Csvg width='50' height='100' viewBox='0 0 50 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 50 L5 45 L10 55 L15 40 L20 60 L25 50 L30 50 L35 20 L40 80 L45 50 L50 50' stroke='%2310b981' stroke-width='2' fill='none'/%3E%3C/svg%3E");
-            background-repeat: repeat-x;
-            background-size: 50px 100%;
-            animation: scrollGraph 1s linear infinite;
-        }
-
         /* Nefes Alan Daire Animasyonu */
         @keyframes pulse-ring {
             0% { transform: scale(0.8); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.5); }
@@ -32,13 +19,18 @@
             animation: pulse-ring 3s infinite cubic-bezier(0.66, 0, 0, 1);
         }
 
-        /* Sekme Geçiş Efektleri */
-        .tab-content { display: none; opacity: 0; transform: translateY(10px); transition: all 0.4s ease; }
-        .tab-content.active { display: flex; opacity: 1; transform: translateY(0); }
+        /* Sekme Geçiş */
+        .tab-content { display: none; height: 100%; flex-direction: column; }
+        .tab-content.active { display: flex; animation: fadeIn 0.3s ease-in-out; }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
 
-        /* Koyu Cam Efekti (Dark Glassmorphism) */
+        /* Glassmorphism */
         .glass {
-            background: rgba(30, 41, 59, 0.6); /* Slate-800 şeffaf */
+            background: rgba(30, 41, 59, 0.6);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.05);
@@ -48,7 +40,7 @@
             max-width: 400px;
             height: 100vh;
             margin: 0 auto;
-            background: #0f172a; /* Slate-900 */
+            background: #0f172a;
             display: flex;
             flex-direction: column;
             overflow: hidden;
@@ -69,13 +61,21 @@
             background: #1e293b; 
             z-index: 0;
         }
+
+        /* Buton Sabitleme Alanı */
+        .bottom-action-area {
+            padding: 1rem 1.5rem 1rem 1.5rem; /* px-6 py-4 */
+            background: #0f172a;
+            flex-shrink: 0; /* Küçülmesini engelle */
+            z-index: 20;
+        }
     </style>
 </head>
 <body class="text-slate-200 antialiased bg-black">
 
     <div class="app-container" id="appContainer">
         
-        <header class="h-16 flex items-center justify-between px-6 z-20 bg-[#0f172a] border-b border-slate-800" id="mainHeader">
+        <header class="h-16 flex items-center justify-between px-6 z-20 bg-[#0f172a] border-b border-slate-800 flex-shrink-0">
             <div class="flex items-center space-x-3">
                 <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center shadow-lg shadow-blue-500/20">
                     <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
@@ -96,45 +96,48 @@
             </div>
         </header>
 
-        <main class="flex-1 overflow-y-auto relative scroll-smooth bg-[#0f172a]">
+        <main class="flex-1 overflow-hidden relative bg-[#0f172a]">
             
-            <div id="tab-home" class="tab-content active flex-col items-center pt-4 px-6 h-full relative">
-                <div class="absolute top-0 left-0 w-full h-64 bg-gradient-to-b from-blue-900/20 to-transparent pointer-events-none"></div>
+            <div id="tab-home" class="tab-content active">
+                
+                <div class="flex-1 overflow-y-auto px-6 pt-4">
+                    <div class="absolute top-0 left-0 w-full h-64 bg-gradient-to-b from-blue-900/20 to-transparent pointer-events-none"></div>
 
-                <div class="mt-4 relative z-10 mb-4">
-                    <div class="w-60 h-60 rounded-full flex items-center justify-center relative">
-                        <div class="absolute inset-0 bg-green-500/10 rounded-full pulse-indicator"></div>
-                        <div class="w-52 h-52 bg-[#1e293b] rounded-full flex items-center justify-center shadow-[0_0_40px_rgba(16,185,129,0.1)] border border-slate-700 z-10">
-                            <div class="text-center">
-                                <p class="text-sm text-slate-400 font-medium mb-1">Anlık Durum</p>
-                                <h2 class="text-3xl font-bold text-white tracking-tight">Stabil</h2>
-                                <span class="inline-block mt-2 px-3 py-1 bg-green-500/10 text-green-400 text-xs font-bold rounded-full border border-green-500/20">
-                                    Risk Düşük
-                                </span>
+                    <div class="mt-4 relative z-10 mb-4 flex justify-center">
+                        <div class="w-60 h-60 rounded-full flex items-center justify-center relative">
+                            <div class="absolute inset-0 bg-green-500/10 rounded-full pulse-indicator"></div>
+                            <div class="w-52 h-52 bg-[#1e293b] rounded-full flex items-center justify-center shadow-[0_0_40px_rgba(16,185,129,0.1)] border border-slate-700 z-10">
+                                <div class="text-center">
+                                    <p class="text-sm text-slate-400 font-medium mb-1">Anlık Durum</p>
+                                    <h2 class="text-3xl font-bold text-white tracking-tight">Stabil</h2>
+                                    <span class="inline-block mt-2 px-3 py-1 bg-green-500/10 text-green-400 text-xs font-bold rounded-full border border-green-500/20">
+                                        Risk Düşük
+                                    </span>
+                                </div>
                             </div>
                         </div>
                     </div>
+
+                    <div class="grid grid-cols-2 gap-4 w-full z-10 mb-4">
+                        <div class="glass p-4 rounded-2xl shadow-lg border border-slate-700 hover:border-slate-600 transition duration-300">
+                            <div class="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center mb-2 border border-slate-700">
+                                <span class="text-orange-400 text-sm">⚡</span>
+                            </div>
+                            <p class="text-xs text-slate-400 font-medium">Son Olay</p>
+                            <p class="text-lg font-bold text-slate-200">12 Gün Önce</p>
+                        </div>
+                        <div class="glass p-4 rounded-2xl shadow-lg border border-slate-700 hover:border-slate-600 transition duration-300">
+                            <div class="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center mb-2 border border-slate-700">
+                                <span class="text-blue-400 text-sm">⏱️</span>
+                            </div>
+                            <p class="text-xs text-slate-400 font-medium">Bağlantı Süresi</p>
+                            <p class="text-lg font-bold text-slate-200">4s 12dk</p>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="grid grid-cols-2 gap-4 w-full z-10 mb-4">
-                    <div class="glass p-4 rounded-2xl shadow-lg border border-slate-700 hover:border-slate-600 transition duration-300">
-                        <div class="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center mb-2 border border-slate-700">
-                            <span class="text-orange-400 text-sm">⚡</span>
-                        </div>
-                        <p class="text-xs text-slate-400 font-medium">Son Olay</p>
-                        <p class="text-lg font-bold text-slate-200">12 Gün</p>
-                    </div>
-                    <div class="glass p-4 rounded-2xl shadow-lg border border-slate-700 hover:border-slate-600 transition duration-300">
-                        <div class="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center mb-2 border border-slate-700">
-                            <span class="text-blue-400 text-sm">⏱️</span>
-                        </div>
-                        <p class="text-xs text-slate-400 font-medium">Süre</p>
-                        <p class="text-lg font-bold text-slate-200">4s 12dk</p>
-                    </div>
-                </div>
-
-                <div class="w-full mt-auto mb-4">
-                     <button class="w-full bg-gradient-to-r from-rose-700 to-rose-600 active:from-rose-800 active:to-rose-700 text-white font-bold py-4 rounded-xl shadow-[0_10px_20px_-5px_rgba(225,29,72,0.3)] transform transition active:scale-[0.98] group relative overflow-hidden">
+                <div class="bottom-action-area">
+                    <button class="w-full bg-gradient-to-r from-rose-700 to-rose-600 active:from-rose-800 active:to-rose-700 text-white font-bold py-4 rounded-xl shadow-[0_10px_20px_-5px_rgba(225,29,72,0.3)] transform transition active:scale-[0.98] group relative overflow-hidden">
                         <div class="absolute inset-0 bg-white/10 group-hover:translate-x-full transition duration-500 ease-out -skew-x-12 -translate-x-full"></div>
                         <span class="flex items-center justify-center space-x-2">
                             <span class="text-xl">⚠️</span>
@@ -144,27 +147,29 @@
                 </div>
             </div>
 
-            <div id="tab-monitor" class="tab-content flex-col h-full bg-[#0f172a] text-white p-6 absolute inset-0 pt-20">
-                <div class="flex justify-between items-end mb-6">
-                    <div>
-                        <div class="flex items-baseline space-x-1">
-                            <h2 class="text-4xl font-mono font-bold text-emerald-400 tracking-tighter">120</h2>
-                            <span class="text-sm text-emerald-400/80">µV</span>
+            <div id="tab-monitor" class="tab-content">
+                
+                <div class="flex-1 flex flex-col px-6 pt-6 overflow-hidden">
+                    <div class="flex justify-between items-end mb-4 flex-shrink-0">
+                        <div>
+                            <div class="flex items-baseline space-x-1">
+                                <h2 class="text-4xl font-mono font-bold text-emerald-400 tracking-tighter" id="voltageValue">42</h2>
+                                <span class="text-sm text-emerald-400/80">µV</span>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-xs text-slate-500 font-mono mb-1">KANAL</div>
+                            <span class="px-2 py-1 bg-slate-800 rounded text-xs text-slate-300 border border-slate-700">M1 - Mastoid</span>
                         </div>
                     </div>
-                    <div class="text-right">
-                        <div class="text-xs text-slate-500 font-mono mb-1">KANAL</div>
-                        <span class="px-2 py-1 bg-slate-800 rounded text-xs text-slate-300 border border-slate-700">FP1 - Frontal</span>
+
+                    <div class="flex-1 bg-[#1e293b] rounded-2xl border border-slate-700 relative overflow-hidden shadow-2xl w-full mb-4">
+                        <div class="absolute inset-0 pointer-events-none" style="background-image: linear-gradient(#334155 1px, transparent 1px), linear-gradient(90deg, #334155 1px, transparent 1px); background-size: 25px 25px; opacity: 0.2;"></div>
+                        <canvas id="eegCanvas" class="w-full h-full block"></canvas>
+                        <div class="absolute inset-0 pointer-events-none shadow-[inset_0_0_20px_rgba(0,0,0,0.5)]"></div>
                     </div>
-                </div>
 
-                <div class="flex-1 bg-[#1e293b] rounded-2xl border border-slate-700 relative overflow-hidden shadow-2xl mb-8 w-full">
-                    <div class="absolute inset-0" style="background-image: linear-gradient(#334155 1px, transparent 1px), linear-gradient(90deg, #334155 1px, transparent 1px); background-size: 25px 25px; opacity: 0.2;"></div>
-                    <div class="absolute inset-0 eeg-graph flex items-center opacity-90 shadow-[0_0_15px_rgba(16,185,129,0.5)]"></div>
-                </div>
-
-                <div class="space-y-4 mt-auto">
-                    <div class="flex justify-between items-center bg-slate-800/50 p-3 rounded-xl border border-slate-700/50">
+                    <div class="flex justify-between items-center bg-slate-800/50 p-3 rounded-xl border border-slate-700/50 mb-2 flex-shrink-0">
                         <span class="text-xs text-slate-400 font-medium">Sinyal Kalitesi</span>
                         <div class="flex space-x-1.5">
                             <div class="w-2.5 h-2.5 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.8)]"></div>
@@ -173,8 +178,10 @@
                             <div class="w-2.5 h-2.5 rounded-full bg-emerald-900 border border-emerald-800"></div>
                         </div>
                     </div>
+                </div>
 
-                    <button class="w-full bg-gradient-to-r from-rose-700 to-rose-600 active:from-rose-800 active:to-rose-700 text-white font-bold py-4 rounded-xl shadow-[0_10px_20px_-5px_rgba(225,29,72,0.3)] transform transition active:scale-[0.98] group relative overflow-hidden mb-4">
+                <div class="bottom-action-area">
+                    <button class="w-full bg-gradient-to-r from-rose-700 to-rose-600 active:from-rose-800 active:to-rose-700 text-white font-bold py-4 rounded-xl shadow-[0_10px_20px_-5px_rgba(225,29,72,0.3)] transform transition active:scale-[0.98] group relative overflow-hidden">
                         <div class="absolute inset-0 bg-white/10 group-hover:translate-x-full transition duration-500 ease-out -skew-x-12 -translate-x-full"></div>
                         <span class="flex items-center justify-center space-x-2">
                             <span class="text-xl">⚠️</span>
@@ -184,60 +191,61 @@
                 </div>
             </div>
 
-            <div id="tab-history" class="tab-content flex-col p-6 h-full">
-                <div class="flex justify-between items-center mb-8 sticky top-0 bg-[#0f172a] z-10 py-2">
-                    <h2 class="text-xl font-bold text-white">Aktivite Geçmişi</h2>
-                    <span class="text-xs font-medium text-blue-400 bg-blue-500/10 border border-blue-500/20 px-3 py-1 rounded-full">Aralık 2025</span>
-                </div>
-
-                <div class="relative timeline-line space-y-8 pl-2 flex-1 overflow-y-auto pb-4" id="deneme">
-                    
-                    <div class="relative pl-8 group">
-                        <div class="absolute left-[11px] top-1.5 w-4 h-4 bg-[#0f172a] border-[3px] border-red-500 rounded-full z-10 shadow shadow-red-500/20 group-hover:scale-110 transition"></div>
-                        <div class="glass p-4 rounded-xl border border-red-500/20 shadow-sm relative overflow-hidden">
-                            <div class="absolute left-0 top-0 bottom-0 w-1 bg-red-500"></div>
-                            <div class="flex justify-between items-start mb-1">
-                                <h4 class="font-bold text-slate-200">Nöbet Tespit Edildi</h4>
-                                <span class="text-xs font-mono text-slate-500">14:30</span>
-                            </div>
-                            <p class="text-xs text-slate-400 mb-3">Bugün</p>
-                            <div class="flex gap-2">
-                                <span class="px-2 py-1 bg-red-500/10 text-red-400 text-[10px] font-bold rounded border border-red-500/20">Otomatik</span>
-                                <span class="px-2 py-1 bg-slate-800 text-slate-400 text-[10px] font-bold rounded border border-slate-700">45 sn</span>
-                            </div>
-                        </div>
+            <div id="tab-history" class="tab-content">
+                
+                <div class="flex-1 overflow-y-auto px-6 pt-4 pb-4">
+                    <div class="flex justify-between items-center mb-8 sticky top-0 bg-[#0f172a] z-10 py-2">
+                        <h2 class="text-xl font-bold text-white">Aktivite Geçmişi</h2>
+                        <span class="text-xs font-medium text-blue-400 bg-blue-500/10 border border-blue-500/20 px-3 py-1 rounded-full">Aralık 2025</span>
                     </div>
 
-                    <div class="relative pl-8 group">
-                        <div class="absolute left-[11px] top-1.5 w-4 h-4 bg-[#0f172a] border-[3px] border-amber-500 rounded-full z-10 shadow shadow-amber-500/20 group-hover:scale-110 transition"></div>
-                        <div class="glass p-4 rounded-xl border border-amber-500/20 shadow-sm relative overflow-hidden">
-                            <div class="absolute left-0 top-0 bottom-0 w-1 bg-amber-500"></div>
-                            <div class="flex justify-between items-start mb-1">
-                                <h4 class="font-bold text-slate-200">Kullanıcı Bildirimi</h4>
-                                <span class="text-xs font-mono text-slate-500">09:15</span>
-                            </div>
-                            <p class="text-xs text-slate-400 mb-2">Dün</p>
-                            <p class="text-sm text-slate-300 italic">"Gözümün önünde ışık çakmaları hissettim."</p>
-                        </div>
-                    </div>
-
-                    <div class="relative pl-8 group">
-                        <div class="absolute left-[11px] top-1.5 w-4 h-4 bg-[#0f172a] border-[3px] border-emerald-500 rounded-full z-10 shadow shadow-emerald-500/20 group-hover:scale-110 transition"></div>
-                        <div class="glass p-3 rounded-xl border border-emerald-500/20 shadow-sm">
-                            <div class="flex justify-between items-center">
-                                <div>
-                                    <h4 class="font-semibold text-sm text-slate-200">Cihaz Başlatıldı</h4>
-                                    <p class="text-[10px] text-slate-500">Bağlantı: Başarılı</p>
+                    <div class="relative timeline-line space-y-8 pl-2">
+                        
+                        <div class="relative pl-8 group">
+                            <div class="absolute left-[11px] top-1.5 w-4 h-4 bg-[#0f172a] border-[3px] border-red-500 rounded-full z-10 shadow shadow-red-500/20 group-hover:scale-110 transition"></div>
+                            <div class="glass p-4 rounded-xl border border-red-500/20 shadow-sm relative overflow-hidden">
+                                <div class="absolute left-0 top-0 bottom-0 w-1 bg-red-500"></div>
+                                <div class="flex justify-between items-start mb-1">
+                                    <h4 class="font-bold text-slate-200">Nöbet Tespit Edildi</h4>
+                                    <span class="text-xs font-mono text-slate-500">10:28</span>
                                 </div>
-                                <span class="text-xs font-mono text-slate-500">08:00</span>
+                                <p class="text-xs text-slate-400 mb-3">Bugün</p>
+                                <div class="flex gap-2">
+                                    <span class="px-2 py-1 bg-slate-800 text-slate-400 text-[10px] font-bold rounded border border-slate-700">Nöbet süresi: 45 sn</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="relative pl-8 group">
+                            <div class="absolute left-[11px] top-1.5 w-4 h-4 bg-[#0f172a] border-[3px] border-amber-500 rounded-full z-10 shadow shadow-amber-500/20 group-hover:scale-110 transition"></div>
+                            <div class="glass p-4 rounded-xl border border-amber-500/20 shadow-sm relative overflow-hidden">
+                                <div class="absolute left-0 top-0 bottom-0 w-1 bg-amber-500"></div>
+                                <div class="flex justify-between items-start mb-1">
+                                    <h4 class="font-bold text-slate-200">Kullanıcı Bildirimi</h4>
+                                    <span class="text-xs font-mono text-slate-500">10:09</span>
+                                </div>
+                                <p class="text-xs text-slate-400 mb-2">Bugün</p>
+                                <p class="text-sm text-slate-300 italic">"Şiddetli mide bulantım var."</p>
+                            </div>
+                        </div>
+
+                        <div class="relative pl-8 group">
+                            <div class="absolute left-[11px] top-1.5 w-4 h-4 bg-[#0f172a] border-[3px] border-emerald-500 rounded-full z-10 shadow shadow-emerald-500/20 group-hover:scale-110 transition"></div>
+                            <div class="glass p-3 rounded-xl border border-emerald-500/20 shadow-sm">
+                                <div class="flex justify-between items-center">
+                                    <div>
+                                        <h4 class="font-semibold text-sm text-slate-200">Cihaz Başlatıldı</h4>
+                                        <p class="text-[10px] text-slate-500">Bağlantı: Başarılı</p>
+                                    </div>
+                                    <span class="text-xs font-mono text-slate-500">10:06</span>
+                                </div>
                             </div>
                         </div>
                     </div>
-
                 </div>
 
-                <div class="w-full mt-auto mb-4 pt-4 bg-[#0f172a] z-20">
-                     <button class="w-full bg-gradient-to-r from-rose-700 to-rose-600 active:from-rose-800 active:to-rose-700 text-white font-bold py-4 rounded-xl shadow-[0_10px_20px_-5px_rgba(225,29,72,0.3)] transform transition active:scale-[0.98] group relative overflow-hidden">
+                <div class="bottom-action-area">
+                    <button class="w-full bg-gradient-to-r from-rose-700 to-rose-600 active:from-rose-800 active:to-rose-700 text-white font-bold py-4 rounded-xl shadow-[0_10px_20px_-5px_rgba(225,29,72,0.3)] transform transition active:scale-[0.98] group relative overflow-hidden">
                         <div class="absolute inset-0 bg-white/10 group-hover:translate-x-full transition duration-500 ease-out -skew-x-12 -translate-x-full"></div>
                         <span class="flex items-center justify-center space-x-2">
                             <span class="text-xl">⚠️</span>
@@ -249,7 +257,7 @@
 
         </main>
 
-        <nav class="h-20 bg-[#0f172a]/90 backdrop-blur-md border-t border-slate-800 flex justify-around items-center px-4 z-30 transition-all duration-300" id="navBar">
+        <nav class="h-20 bg-[#0f172a]/90 backdrop-blur-md border-t border-slate-800 flex justify-around items-center px-4 z-30 flex-shrink-0" id="navBar">
             <button onclick="switchTab('home')" class="nav-item group flex flex-col items-center justify-center w-16 h-16 rounded-2xl transition-all duration-300" id="nav-home">
                 <svg class="w-6 h-6 mb-1 text-blue-500 transition-transform group-hover:-translate-y-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
                 <span class="text-[10px] font-semibold text-blue-500">Ana Ekran</span>
@@ -269,10 +277,12 @@
     </div>
 
     <script>
+        // --- SEKMELER ARASI GEÇİŞ ---
         function switchTab(tabId) {
             document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
             document.getElementById('tab-' + tabId).classList.add('active');
 
+            // Navigasyon İkonlarını Güncelle
             document.querySelectorAll('.nav-item span').forEach(el => {
                 el.classList.remove('text-blue-500');
                 el.classList.add('text-slate-500');
@@ -287,7 +297,112 @@
             activeBtn.querySelector('span').classList.add('text-blue-500');
             activeBtn.querySelector('svg').classList.remove('text-slate-500');
             activeBtn.querySelector('svg').classList.add('text-blue-500');
+
+            // Eğer Monitör sekmesine geçildiyse grafiği yeniden boyutlandır
+            if (tabId === 'monitor') {
+                resizeCanvas();
+            }
         }
+
+        // --- GERÇEKÇİ EEG GRAFİK MOTORU ---
+        const canvas = document.getElementById('eegCanvas');
+        const ctx = canvas.getContext('2d');
+        let width, height;
+        let dataPoints = [];
+        let speed = 2; // Grafik hızı
+        let offset = 0;
+
+        function resizeCanvas() {
+            const parent = canvas.parentElement;
+            if (parent) {
+                canvas.width = parent.clientWidth;
+                canvas.height = parent.clientHeight;
+                width = canvas.width;
+                height = canvas.height;
+            }
+        }
+        
+        window.addEventListener('resize', resizeCanvas);
+        // İlk açılışta boyutlandır
+        setTimeout(resizeCanvas, 100);
+
+        // Gerçekçi EEG Dalgası Oluşturma (Perlin Noise benzeri)
+        function generateData() {
+            // Basit bir dalga yerine birden fazla frekansın birleşimi (Alpha + Beta + Noise)
+            const time = Date.now() * 0.005;
+            // Temel dalga (Alpha ritmi ~10Hz)
+            let y = Math.sin(time * 5) * 15;
+            // İkincil dalga (Beta aktivitesi)
+            y += Math.sin(time * 12) * 8;
+            // Rastgele elektriksel gürültü (Noise)
+            y += (Math.random() - 0.5) * 10;
+            
+            // Ani sivri uçlar (Spikes - Nadiren)
+            if (Math.random() > 0.98) {
+                y += (Math.random() - 0.5) * 40;
+            }
+
+            return y;
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, width, height);
+            
+            // Veri ekle
+            dataPoints.push(generateData());
+            if (dataPoints.length > width / speed) {
+                dataPoints.shift();
+            }
+
+            // Çizim Ayarları
+            ctx.beginPath();
+            ctx.strokeStyle = '#34d399'; // Emerald-400 rengi
+            ctx.lineWidth = 2;
+            ctx.shadowBlur = 5;
+            ctx.shadowColor = 'rgba(52, 211, 153, 0.5)';
+            
+            const centerY = height / 2;
+
+            // Çizgiyi Çiz
+            for (let i = 0; i < dataPoints.length; i++) {
+                const x = i * speed;
+                const y = centerY + dataPoints[i];
+                if (i === 0) ctx.moveTo(x, y);
+                else ctx.lineTo(x, y);
+            }
+            ctx.stroke();
+
+            // Tarama efekti (Silinme çizgisi)
+            // Bu efekt EKG/EEG cihazlarında olur
+            ctx.fillStyle = 'rgba(30, 41, 59, 0.1)'; 
+            ctx.fillRect(width - 50, 0, 50, height);
+
+            requestAnimationFrame(animate);
+        }
+
+        // Animasyonu Başlat
+        resizeCanvas();
+        animate();
+
+        // --- VOLTAJ DEĞERİ SİMÜLASYONU ---
+        // 42uV civarında hafifçe dalgalanan bir değer
+        const voltageDisplay = document.getElementById('voltageValue');
+        
+        setInterval(() => {
+            // 35 ile 48 arasında rastgele bir tamsayı
+            const randomVoltage = Math.floor(Math.random() * (48 - 35 + 1)) + 35;
+            voltageDisplay.innerText = randomVoltage;
+            
+            // Renk hafifçe değişsin (Detay)
+            if(randomVoltage > 45) {
+                voltageDisplay.classList.remove('text-emerald-400');
+                voltageDisplay.classList.add('text-emerald-300');
+            } else {
+                voltageDisplay.classList.add('text-emerald-400');
+                voltageDisplay.classList.remove('text-emerald-300');
+            }
+        }, 1200); // Her 1.2 saniyede bir güncelle
+
     </script>
 </body>
 </html>
