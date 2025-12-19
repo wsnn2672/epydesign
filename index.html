@@ -58,7 +58,7 @@
             border-right: 1px solid #1e293b;
         }
 
-        /* Timeline Çizgisi (Koyu mod için) */
+        /* Timeline Çizgisi */
         .timeline-line::before {
             content: '';
             position: absolute;
@@ -66,7 +66,7 @@
             bottom: 0;
             left: 20px;
             width: 2px;
-            background: #1e293b; /* Slate-800 */
+            background: #1e293b; 
             z-index: 0;
         }
     </style>
@@ -98,17 +98,17 @@
 
         <main class="flex-1 overflow-y-auto relative scroll-smooth bg-[#0f172a]">
             
-            <div id="tab-home" class="tab-content active flex-col items-center pt-8 px-6 h-full relative">
+            <div id="tab-home" class="tab-content active flex-col items-center pt-4 px-6 h-full relative">
                 <div class="absolute top-0 left-0 w-full h-64 bg-gradient-to-b from-blue-900/20 to-transparent pointer-events-none"></div>
 
-                <div class="mt-6 relative z-10 mb-8">
-                    <div class="w-64 h-64 rounded-full flex items-center justify-center relative">
+                <div class="mt-4 relative z-10 mb-4">
+                    <div class="w-60 h-60 rounded-full flex items-center justify-center relative">
                         <div class="absolute inset-0 bg-green-500/10 rounded-full pulse-indicator"></div>
-                        <div class="w-56 h-56 bg-[#1e293b] rounded-full flex items-center justify-center shadow-[0_0_40px_rgba(16,185,129,0.1)] border border-slate-700 z-10">
+                        <div class="w-52 h-52 bg-[#1e293b] rounded-full flex items-center justify-center shadow-[0_0_40px_rgba(16,185,129,0.1)] border border-slate-700 z-10">
                             <div class="text-center">
                                 <p class="text-sm text-slate-400 font-medium mb-1">Anlık Durum</p>
-                                <h2 class="text-4xl font-bold text-white tracking-tight">Stabil</h2>
-                                <span class="inline-block mt-3 px-3 py-1 bg-green-500/10 text-green-400 text-xs font-bold rounded-full border border-green-500/20">
+                                <h2 class="text-3xl font-bold text-white tracking-tight">Stabil</h2>
+                                <span class="inline-block mt-2 px-3 py-1 bg-green-500/10 text-green-400 text-xs font-bold rounded-full border border-green-500/20">
                                     Risk Düşük
                                 </span>
                             </div>
@@ -116,21 +116,31 @@
                     </div>
                 </div>
 
-                <div class="grid grid-cols-2 gap-4 w-full mt-auto mb-6 z-10">
-                    <div class="glass p-5 rounded-2xl shadow-lg border border-slate-700 hover:border-slate-600 transition duration-300">
-                        <div class="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center mb-3 border border-slate-700">
+                <div class="grid grid-cols-2 gap-4 w-full z-10 mb-4">
+                    <div class="glass p-4 rounded-2xl shadow-lg border border-slate-700 hover:border-slate-600 transition duration-300">
+                        <div class="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center mb-2 border border-slate-700">
                             <span class="text-orange-400 text-sm">⚡</span>
                         </div>
                         <p class="text-xs text-slate-400 font-medium">Son Olay</p>
                         <p class="text-lg font-bold text-slate-200">12 Gün</p>
                     </div>
-                    <div class="glass p-5 rounded-2xl shadow-lg border border-slate-700 hover:border-slate-600 transition duration-300">
-                        <div class="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center mb-3 border border-slate-700">
-                            <span class="text-blue-400 text-sm">⏱</span>
+                    <div class="glass p-4 rounded-2xl shadow-lg border border-slate-700 hover:border-slate-600 transition duration-300">
+                        <div class="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center mb-2 border border-slate-700">
+                            <span class="text-blue-400 text-sm">⏱️</span>
                         </div>
                         <p class="text-xs text-slate-400 font-medium">Süre</p>
                         <p class="text-lg font-bold text-slate-200">4s 12dk</p>
                     </div>
+                </div>
+
+                <div class="w-full mt-auto mb-4">
+                     <button class="w-full bg-gradient-to-r from-rose-700 to-rose-600 active:from-rose-800 active:to-rose-700 text-white font-bold py-4 rounded-xl shadow-[0_10px_20px_-5px_rgba(225,29,72,0.3)] transform transition active:scale-[0.98] group relative overflow-hidden">
+                        <div class="absolute inset-0 bg-white/10 group-hover:translate-x-full transition duration-500 ease-out -skew-x-12 -translate-x-full"></div>
+                        <span class="flex items-center justify-center space-x-2">
+                            <span class="text-xl">⚠️</span>
+                            <span>Aura / Rahatsızlık Bildir</span>
+                        </span>
+                    </button>
                 </div>
             </div>
 
@@ -153,7 +163,7 @@
                     <div class="absolute inset-0 eeg-graph flex items-center opacity-90 shadow-[0_0_15px_rgba(16,185,129,0.5)]"></div>
                 </div>
 
-                <div class="space-y-4">
+                <div class="space-y-4 mt-auto">
                     <div class="flex justify-between items-center bg-slate-800/50 p-3 rounded-xl border border-slate-700/50">
                         <span class="text-xs text-slate-400 font-medium">Sinyal Kalitesi</span>
                         <div class="flex space-x-1.5">
@@ -164,10 +174,10 @@
                         </div>
                     </div>
 
-                    <button class="w-full bg-gradient-to-r from-rose-700 to-rose-600 active:from-rose-800 active:to-rose-700 text-white font-bold py-4 rounded-xl shadow-[0_10px_20px_-5px_rgba(225,29,72,0.3)] transform transition active:scale-[0.98] group relative overflow-hidden">
+                    <button class="w-full bg-gradient-to-r from-rose-700 to-rose-600 active:from-rose-800 active:to-rose-700 text-white font-bold py-4 rounded-xl shadow-[0_10px_20px_-5px_rgba(225,29,72,0.3)] transform transition active:scale-[0.98] group relative overflow-hidden mb-4">
                         <div class="absolute inset-0 bg-white/10 group-hover:translate-x-full transition duration-500 ease-out -skew-x-12 -translate-x-full"></div>
                         <span class="flex items-center justify-center space-x-2">
-                            <span class="text-xl">⚠</span>
+                            <span class="text-xl">⚠️</span>
                             <span>Aura / Rahatsızlık Bildir</span>
                         </span>
                     </button>
@@ -180,7 +190,7 @@
                     <span class="text-xs font-medium text-blue-400 bg-blue-500/10 border border-blue-500/20 px-3 py-1 rounded-full">Aralık 2025</span>
                 </div>
 
-                <div class="relative timeline-line space-y-8 pl-2">
+                <div class="relative timeline-line space-y-8 pl-2 flex-1 overflow-y-auto pb-4" id="deneme">
                     
                     <div class="relative pl-8 group">
                         <div class="absolute left-[11px] top-1.5 w-4 h-4 bg-[#0f172a] border-[3px] border-red-500 rounded-full z-10 shadow shadow-red-500/20 group-hover:scale-110 transition"></div>
@@ -225,6 +235,16 @@
                     </div>
 
                 </div>
+
+                <div class="w-full mt-auto mb-4 pt-4 bg-[#0f172a] z-20">
+                     <button class="w-full bg-gradient-to-r from-rose-700 to-rose-600 active:from-rose-800 active:to-rose-700 text-white font-bold py-4 rounded-xl shadow-[0_10px_20px_-5px_rgba(225,29,72,0.3)] transform transition active:scale-[0.98] group relative overflow-hidden">
+                        <div class="absolute inset-0 bg-white/10 group-hover:translate-x-full transition duration-500 ease-out -skew-x-12 -translate-x-full"></div>
+                        <span class="flex items-center justify-center space-x-2">
+                            <span class="text-xl">⚠️</span>
+                            <span>Aura / Rahatsızlık Bildir</span>
+                        </span>
+                    </button>
+                </div>
             </div>
 
         </main>
@@ -250,11 +270,9 @@
 
     <script>
         function switchTab(tabId) {
-            // 1. İçerikleri Değiştir
             document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
             document.getElementById('tab-' + tabId).classList.add('active');
 
-            // 2. Navigasyon Stillerini Sıfırla
             document.querySelectorAll('.nav-item span').forEach(el => {
                 el.classList.remove('text-blue-500');
                 el.classList.add('text-slate-500');
@@ -264,15 +282,11 @@
                 el.classList.add('text-slate-500');
             });
 
-            // Seçili Butonu Renklendir
             const activeBtn = document.getElementById('nav-' + tabId);
             activeBtn.querySelector('span').classList.remove('text-slate-500');
             activeBtn.querySelector('span').classList.add('text-blue-500');
             activeBtn.querySelector('svg').classList.remove('text-slate-500');
             activeBtn.querySelector('svg').classList.add('text-blue-500');
-
-            // Not: Eskiden burada tema değiştirme kodu vardı, artık her şey kalıcı Dark Mode olduğu için
-            // o kısmı kaldırdım. Sadece içerik değişiyor.
         }
     </script>
 </body>
